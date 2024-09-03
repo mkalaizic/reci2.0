@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import React from "react";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 
 const SignUp = () => {
   return (
@@ -12,6 +12,9 @@ const SignUp = () => {
           <Text>Go to sign in</Text>
         </Pressable>
       </Link>
+      <Pressable onPress={() => router.back()}>
+        <Text>Go back</Text>
+      </Pressable>
     </View>
   );
 };
