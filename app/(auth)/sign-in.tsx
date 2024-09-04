@@ -1,5 +1,5 @@
 import React from "react";
-import SignInContent from "../../components/SignInContent";
+import SignInContent from "../../components/FirstScreen/SignInContent";
 
 const SignIn = () => {
   return <SignInContent />;

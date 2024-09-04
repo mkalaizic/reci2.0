@@ -1,7 +1,15 @@
 import { View, StyleSheet } from "react-native";
 import React from "react";
 
-const ThemedView: React.FC<{ children: any }> = ({ children }) => {
+const ThemedView: React.FC<{ children: any; customStyles?: any }> = ({
+  children,
+  customStyles,
+}) => {
+  if (customStyles) {
+    return (
+      <View style={[{ ...customStyles }, styles.container]}>{children}</View>
+    );
+  }
   return <View style={styles.container}>{children}</View>;
 };
 
@@ -13,6 +21,5 @@ const styles = StyleSheet.create({
     // alignItems: "center",
     justifyContent: "center",
     flex: 1,
-    paddingLeft: 25,
   },
 });

@@ -1,0 +1,19 @@
+// sign in o sign up
+// primero basico - conectar con base de datos
+// despues agregar oath
+// de ahi que te lleve a una lista con tus recetas
+// si no tenes ninguna te aparece una pantalla que dice: no hay recetas aun, agregar tu primera receta
+// si hay recetas te aparecen en orden alfabetico
+// tenes la opcion de filtrar, buscar, ordenar
+// tiene la fecha de la ultima modificacion 
+// la pagina de crear tiene el titulo de la receta, la cantidad que sale de esa receta, un item que se duplica, que podes ir agregando con cantidad, ingrediente, medida
+// podria haber una calculadora de cups a gr - podria ser un tab solo de referencia
+// tiene que haber un boton para editar la receta y otro para borrarla
+// tiene que haber un dropdown con los ingredientes que ya cargaste que se te autocomplete, y si no que puedas agregar
+// tiene que haber un tooltip que diga que si usas el mismo ingrediente across recipes podes usar la funcion de lista de compras
+// en la tab de lista de compras podes ir poniendo items y te va apareciendo otro item hasta que submitis - tiene que aceptar cantidad y receta
+// cuando buscas la receta en el dropdown traes la cantidad para la que es la receta y ahi le preguntas la cantidad a comprar
+// submitis y vas a otra pantalla con la lista y una opcion para enviar esa lista por whatsapp mensaje o mail.
+
+
+// los styles - voy creando components que tienen los styles como en react.

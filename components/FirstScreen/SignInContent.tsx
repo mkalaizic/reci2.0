@@ -19,7 +19,7 @@ export default function SignInContent() {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <View style={styles.container}>
-        <View style={styles.header}>
+        <View>
           <Text style={styles.title}>Enter your phone</Text>
           <Text style={styles.subtitle}>
             You will receive a 4 digit code to verify your account
@@ -144,10 +144,8 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     flexShrink: 1,
     flexBasis: 0,
+    paddingLeft: 25,
   },
-  // header: {
-  //   marginVertical: 20,
-  // },
   title: {
     fontSize: 20,
     fontWeight: "bold",
@@ -205,7 +203,7 @@ const styles = StyleSheet.create({
   },
   inputControl: {
     height: 44,
-    backgroundColor: "#f3eff6",
+    backgroundColor: "#efefef",
     paddingLeft: INPUT_OFFSET,
     paddingRight: 24,
     borderRadius: 12,
