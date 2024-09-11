@@ -1,8 +1,9 @@
 import React from "react";
 import SignInContent from "../../components/FirstScreen/SignInContent";
+import TemporarySignInContent from "../../components/FirstScreen/TemporarySignIn";
 
 const SignIn = () => {
-  return <SignInContent />;
+  return <TemporarySignInContent />;
 };
 
 export default SignIn;

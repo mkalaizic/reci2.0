@@ -1,42 +1,35 @@
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  Alert,
-  Pressable,
-} from "react-native";
+import React, { useState } from "react";
 import { router } from "expo-router";
-import React, { useEffect, useState } from "react";
-import { createUser, signOut } from "../../lib/appwrite";
+import {
+  FormField,
+  Pressable,
+  TextInput,
+  Alert,
+  Text,
+  StyleSheet,
+  View,
+} from "react-native";
+import ThemedView from "../StyledComponents/ThemedView";
+import { signIn } from "../../lib/appwrite";
 
-const SignUpContent = () => {
+export default function TemporarySignInContent() {
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
-  useEffect(() => {
-    signOut();
-  }, []);
-
   const submitForm = async () => {
     if (form.email === "" || form.password === "") {
       Alert.alert("Error", "Please fill in all fields");
-      return;
     }
-
     try {
-      //   await signIn(form.email, form.password);
+      await signIn(form.email, form.password);
       //   const result = await getCurrentUser();
-
-      await createUser(form.email, form.password);
       Alert.alert("Success", "User signed in successfully");
       router.replace("/home");
     } catch (error) {
       Alert.alert("Error", error.message);
     }
   };
-
   return (
     <View style={styles.container}>
       <TextInput
@@ -58,9 +51,7 @@ const SignUpContent = () => {
       </Pressable>
     </View>
   );
-};
-
-export default SignUpContent;
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -73,8 +64,3 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
 });
-
-// form to sign up
-// require name, last name, email address and password
-// agregar link al sign in
-// agregar back button

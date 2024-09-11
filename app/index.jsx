@@ -4,12 +4,14 @@ import SignInContent from "../components/FirstScreen/SignInContent";
 import SignUpQuestion from "../components/FirstScreen/SignUpQuestion";
 import ThemedView from "../components/StyledComponents/ThemedView";
 import { GuestQuestion } from "../components/FirstScreen/GuestQuestion";
+import TemporarySignInContent from "../components/FirstScreen/TemporarySignIn";
 
 const App = () => {
   return (
     <ThemedView style={styles.homeWrapper}>
       <Text style={styles.reciTitle}>Reci</Text>
-      <SignInContent />
+      {/* <SignInContent /> */}
+      <TemporarySignInContent />
       <View>
         <SignUpQuestion />
         <GuestQuestion />
