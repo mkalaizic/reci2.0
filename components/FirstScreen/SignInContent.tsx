@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   SafeAreaView,
@@ -6,132 +6,132 @@ import {
   Text,
   TouchableOpacity,
   TextInput,
+  Pressable,
+  Alert,
+  ActivityIndicator,
 } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { signIn } from "../../lib/appwrite";
+import { router } from "expo-router";
 
-const INPUT_OFFSET = 50;
+const INPUT_OFFSET = 20;
 
 export default function SignInContent() {
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
+
+  const resetForm = (): void => {
+    setForm({
+      email: "",
+      password: "",
+    });
+  };
+
+  const submitForm = async () => {
+    setIsLoading(true);
+
+    try {
+      if (form.email === "" || form.password === "") {
+        Alert.alert("Error", "Please fill in all fields");
+      } else {
+        await signIn(form.email, form.password);
+        // const result = await getCurrentUser();
+
+        Alert.alert("Success", "User signed in successfully");
+        router.replace("/home");
+        resetForm();
+      }
+    } catch (error) {
+      Alert.alert("Error", error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <View style={styles.container}>
-        <View>
-          <Text style={styles.title}>Enter your phone</Text>
-          <Text style={styles.subtitle}>
-            You will receive a 4 digit code to verify your account
-          </Text>
+        <Text style={styles.subtitle}>Please login to continue</Text>
+        <View style={styles.inputsContainer}>
+          <TextInput
+            keyboardType="email-address"
+            onChangeText={(e) => setForm({ ...form, email: e })}
+            placeholder="Email"
+            placeholderTextColor="#505060"
+            returnKeyType="done"
+            style={styles.inputControl}
+            value={form.email}
+          />
+
+          <TextInput
+            keyboardType="visible-password"
+            onChangeText={(e) => setForm({ ...form, password: e })}
+            placeholder="Password"
+            placeholderTextColor="#505060"
+            returnKeyType="done"
+            style={styles.inputControl}
+            value={form.password}
+          />
         </View>
-        <View style={styles.form}>
-          <View style={styles.input}>
-            <Text style={styles.inputLabel}>+1</Text>
-            <TextInput
-              clearButtonMode="while-editing"
-              keyboardType="phone-pad"
-              onChangeText={(email) => setForm({ ...form, email })}
-              placeholder="Phone number"
-              placeholderTextColor="#505060"
-              returnKeyType="done"
-              style={styles.inputControl}
-              value={form.email}
-            />
-          </View>
-          <View style={styles.formAction}>
-            <TouchableOpacity
-              onPress={() => {
-                // handle onPress
-              }}
-            >
-              <View style={styles.btn}>
-                <View style={{ width: 32 }} />
-                <Text style={styles.btnText}>Continue</Text>
-                <MaterialCommunityIcons
-                  color="#fff"
-                  name="arrow-right"
-                  size={20}
-                  style={{ marginLeft: 12 }}
-                />
-              </View>
-            </TouchableOpacity>
-            <Text style={styles.formActionSpacer}>Or continue with</Text>
-            <TouchableOpacity
-              onPress={() => {
-                // handle onPress
-              }}
-            >
-              <View style={styles.btnSecondary}>
-                <MaterialCommunityIcons
-                  color="#000"
-                  name="email-fast-outline"
-                  size={22}
-                  style={{ marginRight: 12 }}
-                />
-                <Text style={styles.btnSecondaryText}>Email</Text>
-                <View style={{ width: 34 }} />
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                // handle onPress
-              }}
-            >
-              <View style={styles.btnSecondary}>
-                <MaterialCommunityIcons
-                  color="#000"
-                  name="apple"
-                  size={22}
-                  style={{ marginRight: 12 }}
-                />
-                <Text style={styles.btnSecondaryText}>Apple</Text>
-                <View style={{ width: 34 }} />
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                // handle onPress
-              }}
-            >
-              <View style={styles.btnSecondary}>
-                <MaterialCommunityIcons
-                  color="#000"
-                  name="google"
-                  size={22}
-                  style={{ marginRight: 12 }}
-                />
-                <Text style={styles.btnSecondaryText}>Google</Text>
-                <View style={{ width: 34 }} />
-              </View>
-            </TouchableOpacity>
-            {/* <TouchableOpacity
-              onPress={() => {
-                // handle onPress
-              }}
-            >
-              <View style={styles.btnSecondary}>
-                <MaterialCommunityIcons
-                  color="#000"
-                  name="facebook"
-                  size={22}
-                  style={{ marginRight: 12 }}
-                />
-                <Text style={styles.btnSecondaryText}>Facebook</Text>
-                <View style={{ width: 34 }} />
-              </View>
-            </TouchableOpacity> */}
-          </View>
-          {/* <TouchableOpacity
+
+        <View style={styles.formAction}>
+          <TouchableOpacity
             onPress={() => {
-              // handle link
+              // handle onPress
             }}
-            style={{ marginTop: "auto" }}
-          > */}
-          {/* <Text style={styles.formFooter}>
-              Not a member? <Text style={{ color: "#d897f8" }}>Sign up</Text>
-            </Text> */}
-          {/* </TouchableOpacity> */}
+          >
+            <View style={styles.btn}>
+              <View style={{ width: 32 }} />
+              <Pressable onPress={submitForm}>
+                {isLoading ? (
+                  <ActivityIndicator />
+                ) : (
+                  <Text style={styles.btnText}>Continue</Text>
+                )}
+              </Pressable>
+              <MaterialCommunityIcons
+                color="#fff"
+                name="arrow-right"
+                size={20}
+                style={{ marginLeft: 12 }}
+              />
+            </View>
+          </TouchableOpacity>
+          <Text style={styles.formActionSpacer}>Or continue with</Text>
+          <TouchableOpacity
+            onPress={() => {
+              // handle onPress
+            }}
+          >
+            <View style={styles.btnSecondary}>
+              <MaterialCommunityIcons
+                color="#000"
+                name="phone"
+                size={22}
+                style={{ marginRight: 12 }}
+              />
+              <Text style={styles.btnSecondaryText}>SMS</Text>
+              <View style={{ width: 34 }} />
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              // handle onPress
+            }}
+          >
+            <View style={styles.btnSecondary}>
+              <MaterialCommunityIcons
+                color="#000"
+                name="google"
+                size={22}
+                style={{ marginRight: 12 }}
+              />
+              <Text style={styles.btnSecondaryText}>Google</Text>
+              <View style={{ width: 34 }} />
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
@@ -139,13 +139,18 @@ export default function SignInContent() {
 }
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 24,
+    // paddingTop: 24,
     paddingRight: 24,
     flexGrow: 1,
     flexShrink: 1,
     flexBasis: 0,
     paddingLeft: 25,
   },
+  inputsContainer: {
+    display: "flex",
+    gap: 7,
+  },
+
   title: {
     fontSize: 20,
     fontWeight: "bold",
@@ -156,6 +161,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "500",
     color: "#929292",
+    paddingBottom: 20,
   },
   /** Form */
   form: {
@@ -197,7 +203,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     fontSize: 15,
     fontWeight: "500",
-    color: "#222",
+    color: "#8b8989",
     zIndex: 9,
     paddingLeft: 5,
   },
@@ -209,7 +215,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     fontSize: 15,
     fontWeight: "500",
-    color: "#222",
+    color: "#343333",
     borderWidth: 1,
     borderColor: "transparent",
     borderStyle: "solid",

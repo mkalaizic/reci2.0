@@ -10,8 +10,8 @@ const App = () => {
   return (
     <ThemedView style={styles.homeWrapper}>
       <Text style={styles.reciTitle}>Reci</Text>
-      {/* <SignInContent /> */}
-      <TemporarySignInContent />
+      <SignInContent />
+      {/* <TemporarySignInContent /> */}
       <View>
         <SignUpQuestion />
         <GuestQuestion />
